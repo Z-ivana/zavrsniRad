@@ -1,0 +1,34 @@
+h1{font-size: 60px; padding-left: 20%}
+h2{color: whitesmoke; font-size: 40px;}
+body{background-image: url("pictures/library2.jpg");color: whitesmoke;}
+nav{ padding-left:15%;}
+form{background-color:rgba(8, 8, 8, 0.596);margin: 20px; }
+.menu{float:left; border: solid whitesmoke 1px; padding:10px; margin-left: 10px; background-color:rgba(8, 8, 8, 0.596); }
+.column{float:left; padding:10px; margin-left: 30px;}
+header{position: relative; margin:auto;}
+#register{display: none; padding:0%; margin: auto;max-width:30%;}
+#forgetPassword{display: none; padding:0%; margin: auto;max-width:15%;}
+#logOut{display: none;float: right;}
+#logIn{display:block;  float:right; padding-left: 0%;}
+#logInButton a{overflow: hidden;}
+#email, #pass, #logInButton,#registerButton{float:left; padding-left: 10px;}
+#forgetPassButton{float:left; padding-left: 100px;padding-right: 100px;}
+#addBook{ max-width: 50%;float:left;display:none;}
+#whomBorrowed{display: none;}
+#addAuthor{display: none;position: relative; float: left;margin-left: 10%;width: 30%;}
+#rate{max-width:35px;}
+#yesRead{display: none;}
+table{ background-color:rgba(8, 8, 8, 0.596);margin-top: 50px; }
+td, th{padding: 5px; border: 1px solid whitesmoke;}
+.star{width:15px;height: 15px;}
+#myTableAuthor, #myTableBook{display: none;}
+#tableBookList{width:915px;}
+#tableAuthorList{width:494px;}
+#welcome{clear: both;}
+#search{clear: both;margin-left:5%;margin-top:20px;display: none;}
+#searchButton{border: 1px solid whitesmoke;background-color:rgba(8, 8, 8, 0.596);padding: 3px;}
+#searchButton img{width:15px; height: 15px;}
+#searchName{width:400px;height:20px;background-color:rgba(8, 8, 8, 0.596);color: whitesmoke; }
+#profilePage{display: none;width:400px;position:relative; margin:auto; font-size: 20px;text-align: left; padding: 20px;border: 1px solid whitesmoke;background-color:rgba(8, 8, 8, 0.596);color: whitesmoke }
+.span{padding-left:50px;}
+#profilePage div{border: 1px solid whitesmoke;font-size: 15px;width: 50px;margin-left: 350px;text-align: center;}

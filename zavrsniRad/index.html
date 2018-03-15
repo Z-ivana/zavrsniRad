@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteka</title>
+    <script type="text/javascript" src="tableSort/jquery-latest.js"></script> 
+    <script type="text/javascript" src="tableSort/jquery.tablesorter.js"></script> 
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="aboveHeader">
+            <button id="logOut">LogOut</button>
+            <form action="" id="logIn">
+                <fieldset>
+                    <input type="email" id="email" name="email" placeholder="email">
+                    <input type="password" id="pass" name="password" placeholder="password">
+                    <div id="logInButton"><strong>Log in</strong></div>
+                    <br>
+                    <div>
+                        <div id="registerButton">Register</div>
+                        <div id="forgetPassButton">Forget password</div>
+                    </div>
+                </fieldset>
+            </form>
+    </div>
+    <br>
+    
+    <header>
+           <h1>Your home Library</h1> 
+    </header>
+    <nav>
+            <div class="menu" id="home">Home</div>           
+            <div class="menu" id="addNewBook">Add new book</div>
+            <div class="menu" id="addNewAuthor">Add new author</div>
+            <div class="menu" id="bookList">View book list</div>
+            <div class="menu" id="authorList">View author list</div>
+            <div class="menu" id="profile">Your profile page</div>
+    </nav><br>
+    <br>
+    <div id="search">
+            <input type="text" name="searchName" id="searchName" placeholder="Find book...">
+            <span id="searchButton" >Search <img src="pictures/search/search-icon-md.png" alt="saerch"></span><br>
+    </div>
+    <div id="tableBookList"></div>
+    <div id="tableAuthorList"></div>
+    <br> <div id="welcome"></div>
+
+    <div id="profilePage">
+        Your name:<span class="span" id="myName"></span><br>
+        Your lastname:<span class="span" id="myLastName"></span><br>
+        Your gender:<span class="span" id="myGender"></span><br>
+        Your email address:<span class="span" id="myEmail"></span><br>
+        <div id="editProfileButton">Edit</div>  
+    </div>
+    <form action="" id="addBook">
+        <fieldset>
+            <legend>Add new book to library:</legend>
+            <div class="column">
+                <label for="bookIsbn">ISBN:</label><br>
+                <input type="text" name="bookIsbn" id="bookIsbn" required >
+                <br><br>
+                <label for="bookName">Book name:</label><br>
+                <input type="text" name="bookName" id="bookName" required >
+                <br><br>
+                <label for="author">Select Author:</label><br>
+                <select name="author" id="author">
+                <option value="">Pick author from list</option>    
+                </select><input id="addAuthorButton" type="button" value="AddNew" required />
+                <br><br>
+                <label for="gender">Select Gender:</label><br>
+                <select name="gender" id="gender"></select>
+                <br><br>
+                <label for="year">Year of publication:</label><br>
+                <input type="number" min="1640" id="year">
+            </div>
+            <div class="column">
+                <label for="borrowed">Is it borrowed to someone?</label><br>
+                <input type="radio" name="borrowed" id="borrowed" value="yes">Yes
+                <div id=whomBorrowed>
+                        <label for="whom">To whom you borrowed the book?</label><br>
+                        <input type="whom" id="whom">
+                </div>
+                <br>
+                <input type="radio" name="borrowed" id="notBorrowed" value="no">No
+                <br><br>
+                <label for="read">Have you read this book?</label><br>
+                <input type="radio" name="read" id="read">Yes <br>
+                <div id="yesRead">
+                    <label for="rate">Rate this book:</label>
+                    <input type="number" name="rate" id="rate" min="1" max="10">
+                    <div id="ratingBook">
+                        <img src="pictures/rating/whiteStar.png" alt="whiteStar" class="star 1">
+                        <img src="pictures/rating/whiteStar.png" alt="whiteStar" class="star 2">
+                        <img src="pictures/rating/whiteStar.png" alt="whiteStar" class="star 3">
+                        <img src="pictures/rating/whiteStar.png" alt="whiteStar" class="star 4">                        
+                        <img src="pictures/rating/whiteStar.png" alt="whiteStar" class="star 5">                     
+                    </div>
+                </div>
+                <input type="radio" name="read" id="notRead"> No 
+                <br><br>
+                <div  id="buttons">
+                <button type="submit" id="saveBook">Add Book</button>
+                <button type="reset">Reset</button> 
+                </div>
+            </div>           
+        </fieldset>
+    </form>
+    <form action="" id="addAuthor">
+            <fieldset>
+                <legend>Add new Author to a list:</legend>
+                <label for="authorName">Author first name:</label><br>
+                <input type="text" name="authorName" id="authorName" required >
+                <br><br>
+                <label for="authorLastName">Author last name:</label><br>
+                <input type="text" name="authorLastName" id="authorLastName"required >
+                <br><br>
+                <label for="born">Born:</label><br>
+                <input type="number" id="born">
+                <br><br>
+                <label for="died">Died:</label><br>
+                <input type="number" name="died" id="died">
+                <br><br>
+                <label for="nationality">Nationality:</label><br>
+                <select name="nationality" id="nationality"></select>
+                <br><br>
+                <div id= "buttonsA">
+                <button type="submit" id="saveNewAuthor">Save</button>
+                <button type="reset">Reset</button>    
+                </div>        
+            </fieldset>
+        </form>
+
+    <form action="" id="register">
+        <fieldset>
+            <legend id="createOrEdit">Create your acount:</legend>
+
+            <label for="userName">Name:</label>
+            <br>
+            <input type="text" name="userName" id="userName" required >
+            <br>
+            <br>
+
+            <label for="userLastname">Lastname</label>
+            <br>
+            <input type="text" name="userLastname" id="userLastname">
+            <br>
+            <br>
+
+            <label for="gender" id="userGender">Gender:</label>
+            <br>
+            <input type="radio" name="gender" value="male"> Male
+            <input type="radio" name="gender" value="female"> Female
+            <br>
+            <br>
+
+            <label for="userEmail">Email address: </label>
+            <br>
+            <input type="text" name="userEmail" id="userEmail" required >
+            <br>
+            <br>
+
+            <label for="userPassword">Password:</label>
+            <br>
+            <input type="password" name="userPassword" id="userPassword" required >
+            <br>
+            <br>
+            <div id="buttonsP">
+            <button type="submit" id="createAcount">Create acount</button>
+            <button type="reset">Reset</button>
+            </div>
+        </fieldset>
+    </form>
+    <form action="" id="forgetPassword">
+        <fieldset>
+            <legend>Forget password</legend>
+            <label for="forgetPass">Enter your email address:</label>
+            <br>
+            <input type="email" name="forgetPass" id="forgetPass" required >
+            <button type="submit" id="sendEmail">Send</button>
+        </fieldset>
+    </form>
+    <script src="script.js"></script>
+</body>
+
+</html>
