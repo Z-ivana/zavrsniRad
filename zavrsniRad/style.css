@@ -4,6 +4,8 @@ body{background-image: url("pictures/library2.jpg");color: whitesmoke;}
 nav{ padding-left:15%;}
 form{background-color:rgba(8, 8, 8, 0.596);margin: 20px; }
 .menu{float:left; border: solid whitesmoke 1px; padding:10px; margin-left: 10px; background-color:rgba(8, 8, 8, 0.596); }
+nav img{height: 23px; width: 23px;}
+#searchMenuButton{float:left; padding:5px; margin-left: 10px;}
 .column{float:left; padding:10px; margin-left: 30px;}
 header{position: relative; margin:auto;}
 #register{display: none; padding:0%; margin: auto;max-width:30%;}
@@ -18,14 +20,13 @@ header{position: relative; margin:auto;}
 #addAuthor{display: none;position: relative; float: left;margin-left: 10%;width: 30%;}
 #rate{max-width:35px;}
 #yesRead{display: none;}
-table{ background-color:rgba(8, 8, 8, 0.596);margin-top: 50px; }
-td, th{padding: 5px; border: 1px solid whitesmoke;}
+table{ margin-top: 50px; }
+td, th{background-color:rgba(8, 8, 8, 0.596);padding: 5px; border: 1px solid whitesmoke;}
 .star{width:15px;height: 15px;}
-#myTableAuthor, #myTableBook{display: none;}
-#tableBookList{width:915px;}
-#tableAuthorList{width:494px;}
+#myTableAuthor, #myTableBook{display: none; }
+#tableBookList, #tableAuthorList{border-collapse: collapse;display: none;}
 #welcome{clear: both;}
-#search{clear: both;margin-left:5%;margin-top:20px;display: none;}
+#search{clear: both;margin-left:5%;margin-top:20px;display: none}
 #searchButton{border: 1px solid whitesmoke;background-color:rgba(8, 8, 8, 0.596);padding: 3px;}
 #searchButton img{width:15px; height: 15px;}
 #searchName{width:400px;height:20px;background-color:rgba(8, 8, 8, 0.596);color: whitesmoke; }
