@@ -78,33 +78,45 @@ var logRegForget = function () {
         if (allUsers[email].password == password) return true;
         return false;
     }
-    document.getElementById("logInButton").addEventListener("click", function (e) {
-        e.preventDefault();
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("pass").value;
+
         var welcomeText=document.getElementById("welcome");
+        var whoIsLoged;
+        console.log("log...........",log);
         
+        var welcomeMesage=function () {
+            if(typeof log.name!="undefined"){
+                whoIsLoged = log.name + " " + log.lastName;  
+                console.log("ko je ulogovan........",whoIsLoged);
+                welcomeText.innerText="Welcome, "+whoIsLoged+" !";
+            }else {
+                welcomeText.innerText="Welcome, stranger please log in !";   
+            }  
+        }
+        console.log("log.name......", log.name);
+        welcomeMesage();    
         
+        document.getElementById("logInButton").addEventListener("click", function (e) {
+            e.preventDefault(); 
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("pass").value;
+            location.reload()
+           // welcomeMesage();             
+            
         if (typeof allUsers[email]!='undefined' && validateUser(email, password) == true) {
-            var whoIsLoged = allUsers[email].name + " " + allUsers[email].lastName;
             lStorage.save("loggedInUser", allUsers[email]);
-            welcomeText.innerText="Welcome, "+whoIsLoged+" !";
-            //saveToCookiesStorage(email, whoIsLoged, 3);
-            log = true;
             document.getElementById("logOut").style.display = "block";
             document.getElementById("logIn").style.display = "none";
-            document.getElementById("welcome").style.display="block";
-            
+            //document.getElementById("welcome").style.display="none";
+        }else {
+            console.log("neispravan mejl ili password");
         }
-        else console.log("neispravan mejl ili password");
-        console.log("da li je logovan: " + log);
+        
     });
     document.getElementById("logOut").addEventListener("click", function () {
-        //var cookieName = document.getElementById("email").value;
-        log = false;
+        location.reload();
+        welcomeMesage();
         console.log("da li je sad ulogovan::: " + log);
         localStorage.removeItem("loggedInUser");
-        //delFromCookiesStorages(cookieName);
         document.getElementById("logOut").style.display = "none";
         document.getElementById("logIn").style.display = "block";
     });
@@ -119,11 +131,17 @@ var logRegForget = function () {
 
     });
     return{
-        createUser:createUser
+        log:log,
+        createUser:createUser,
+        addUserToAllUsers:addUserToAllUsers
         
     }
 };
 logRegForget();
+
+
+
+
 //######################### kreiranje liste sa zanrovima
 var createGenderList=(function () {
     var genderList=["Pick gender from list","Art & Photography","Biography","Children's Books","Crafts & Hobbies","Crime & Thriller","Fiction","Food & Drink","Graphic Novels", "Anime & Manga","History & Archaeology", "Mind, Body & Spirit", "Science Fiction, Fantasy & Horror", "Business, Finance & Law","Computing","Dictionaries & Languages","Entertainment","Health","Home & Garden","Humour","Medical","Natural History","Personal Development","Poetry & Drama","Reference","Religion","Romance","Science & Geography","Society & Social Sciences","Sport","Stationery","Teaching Resources & Education","Technology & Engineering","Transport","Travel & Holiday Guides"];   
@@ -158,8 +176,13 @@ var booksAndAuthors = (function () {
 
     document.getElementById("addNewAuthor").addEventListener("click",function () {
         document.getElementById("addAuthor").style.display="block";
+        document.getElementById("search").style.display="none";   
+        document.getElementById("profilePage").style.display="none";   
+        document.getElementById("addBook").style.display="none";  
+        document.getElementById("myTableBook").style.display="none";  
+        document.getElementById("myTableAuthor").style.display="none";
         document.getElementById("saveChangesA").style.visibility = "hidden";
-        document.getElementById("myTableBook").style.display="none";        
+        
     });
 
     var Author=function (id, name, lastName, born ,died, nationality) {
@@ -207,6 +230,7 @@ var booksAndAuthors = (function () {
             document.getElementById("tableAuthorList").style.display="none";
             document.getElementById("profilePage").style.display="none";
             document.getElementById("addAuthor").style.display="none";
+            document.getElementById("search").style.display="none";
             document.getElementById("author").addEventListener("click",function () {
                 createAuthorsList()  
               });  
@@ -302,7 +326,7 @@ var booksAndAuthors = (function () {
 var bookTable=(function () {
     var createTableHead = function (numberOfColumn, id, clasa) {
         var table = document.createElement("table");
-        table.setAttribute("border", 1);
+        table.setAttribute("border-collapse", "collapse");
         table.setAttribute("id", "myTableBook");
         table.setAttribute("class", clasa);
         document.getElementById("tableBookList").appendChild(table);
@@ -363,10 +387,15 @@ var bookTable=(function () {
         }
     }
     document.getElementById("bookList").addEventListener("click",function () {
-        document.getElementById("myTableBook").style.display="block"; // nece da radi ako je pre toga kliknuto na addNewBook or addNewAuthor
+        document.getElementById("myTableBook").style.display="block"; 
+        document.getElementById("tableBookList").style.display="block";
         document.getElementById("myTableAuthor").style.display="none";
         document.getElementById("addBook").style.display="none";
         document.getElementById("addAuthor").style.display="none";
+        document.getElementById("search").style.display="none";
+        document.getElementById("profilePage").style.display="none";
+        
+        
     });   
     return{
         createHead : createTableHead,
@@ -383,7 +412,7 @@ bookTable.writeData();
 var authorTable=(function () {
     var createTableHead = function (numberOfColumn, id, clasa) {
         var table = document.createElement("table");
-        table.setAttribute("border", 1);
+        table.setAttribute("border-collapse", "collapse");
         table.setAttribute("id", "myTableAuthor");
         table.setAttribute("class", clasa);
         document.getElementById("tableAuthorList").appendChild(table);
@@ -436,8 +465,14 @@ var authorTable=(function () {
         }
     }
     document.getElementById("authorList").addEventListener("click",function () {
-        document.getElementById("myTableAuthor").style.display="block";// i ovaj ne radi ako je kliknuto na AddNew book ili add new author
-        document.getElementById("myTableBook").style.display="none";  
+        document.getElementById("myTableAuthor").style.display="block";
+        document.getElementById("tableAuthorList").style.display="block";
+        document.getElementById("myTableBook").style.display="none"; 
+        document.getElementById("search").style.display="none";  
+        document.getElementById("addBook").style.display="none";  
+        document.getElementById("addAuthor").style.display="none";  
+        document.getElementById("profilePage").style.display="none";  
+        
         
     });
         return{
@@ -463,7 +498,7 @@ var authorTable=(function () {
 sortTable("myTableBook");
 sortTable("myTableAuthor");
 //############################ Profil korisnika
-var profilePage=function () {
+
     document.getElementById("profile").addEventListener("click", function () {
         
             var loggedInUser=lStorage.load("loggedInUser");
@@ -471,10 +506,16 @@ var profilePage=function () {
             document.getElementById("myLastName").textContent=loggedInUser.lastName;
             document.getElementById("myGender").textContent=loggedInUser.gender;
             document.getElementById("myEmail").textContent=loggedInUser.email;
-            document.getElementById("profilePage").style.display="block";       
+            document.getElementById("profilePage").style.display="block";  
+            document.getElementById("tableBookList").style.display="none";
+            document.getElementById("tableAuthorList").style.display="none";
+            document.getElementById("search").style.display="none";
+            document.getElementById("addBook").style.display="none";
+            document.getElementById("addAuthor").style.display="none";
+            
+            
     });
-};
-profilePage();
+
 //############################ edit & del
 var editAndDel= function () {
     var allEditB=document.querySelectorAll("[id$='_edit']");
@@ -551,7 +592,8 @@ var editAndDel= function () {
                     delete allBooks[isbn];
                     lStorage.save("allBooks",allBooks); 
                     location.reload();
-                    document.getElementById("myTableBook").style.display="block";// zasto ovo ne radi
+                    document.getElementById("myTableBook").style.display="block";// ne rade
+                    document.getElementById("tableBookList").style.display="block";
                 });
             }
         }else if(bookOrAuthor=="author"){ 
@@ -559,53 +601,19 @@ var editAndDel= function () {
             for(var i=0;i<allDell.length;i++){
                 allDell[i].addEventListener("click", function () {
                     var authorsId=this.id.substr(0,this.id.length-4);   
-                    console.log(allAuthors[authorsId]);
+                    //console.log(allAuthors[authorsId]);
                     delete allAuthors[authorsId];
                     lStorage.save("allAuthors",allAuthors);
                     location.reload();  
-                    document.getElementById("myTableAuthor").style.display="block";// zasto ovo ne radi
+                    document.getElementById("myTableAuthor").style.display="block";// ne rade
+                    document.getElementById("tableAuthorList").style.display="block";
+                    
                 });       
             }   
         }
     }
     deleteBooksOrAuthor("book");
     deleteBooksOrAuthor("author");
-
-    var loggedInUser=lStorage.load("loggedInUser"); 
-    console.log(loggedInUser);
-       
-    document.getElementById("editProfileButton").addEventListener("click",function () {
-        document.getElementById("register").style.display="block";
-        var button=document.createElement("button");
-        button.textContent="Save changes";
-        button.setAttribute("id", "saveChangesProfile");        
-        document.getElementById("buttonsP").appendChild(button);
-        document.getElementById("userName").textContent=loggedInUser.name;
-        document.getElementById("userLastname").value=loggedInUser.lastName;
-        document.getElementById("userGender").value=loggedInUser.gender;
-        document.getElementById("userEmail").value=loggedInUser.email;  
-    });
-    // ne hvata id od saveChangesProfile???
-  
-    /**  document.getElementById("saveChangesProfile").addEventListener("click",function () { 
-        if(loggedInUser.email==allUsers[email].email && document.querySelectorAll("require")!=null){
-            allUsers[email] = logRegForget.createUser();
-        }else{
-            console.log("you can`t change email and you need to fill all requered filds");
-            
-        }
-        lStorage.save("allUsers", allUsers);
-        lStorage.save("loggedInUser", allUsers[email]);
-    });**/
-    document.getElementById("saveChanges").addEventListener("click", function () {
-        if(allBooks[isbn].isbn==document.getElementById("bookIsbn").value && document.querySelectorAll("require")!=null){
-        allBooks[isbn] = booksAndAuthors.createBook();
-        }          
-        else {
-            console.log("you can`t change isbn number of a book and you need to fill all requered filds");
-        }
-        lStorage.save("allBooks",allBooks);
-    });
     
 };
 editAndDel();
@@ -631,3 +639,14 @@ var search = function () {
    });
 };
 search();
+document.getElementById("searchMenuButton").addEventListener("click",function () {
+    document.getElementById("search").style.display="block";
+    document.getElementById("myTableBook").style.display="block";
+    document.getElementById("tableBookList").style.display="block";
+    document.getElementById("tableAuthorList").style.display="none";
+    document.getElementById("addBook").style.display="none";
+    document.getElementById("addAuthor").style.display="none";
+    document.getElementById("profilePage").style.display="none";
+    
+});
+
