@@ -33,3 +33,5 @@ td, th{background-color:rgba(8, 8, 8, 0.596);padding: 5px; border: 1px solid whi
 #profilePage{display: none;width:400px;position:relative; margin:auto; font-size: 20px;text-align: left; padding: 20px;border: 1px solid whitesmoke;background-color:rgba(8, 8, 8, 0.596);color: whitesmoke }
 .span{padding-left:50px;}
 #profilePage div{border: 1px solid whitesmoke;font-size: 15px;width: 50px;margin-left: 350px;text-align: center;}
+#noBook{display: none;}
+#alert{padding-left:40px;display: none;}
