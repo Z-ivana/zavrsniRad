@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Biblioteka</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="tableSort/jquery-latest.js"></script> 
     <script type="text/javascript" src="tableSort/jquery.tablesorter.js"></script> 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -31,7 +33,7 @@
            <h1>Your home Library</h1> 
     </header>
     <nav>
-            <div class="menu" id="home">Home</div>           
+            <!--<div class="menu" id="home">Home</div>  -->         
             <div class="menu" id="addNewBook">Add new book</div>
             <div class="menu" id="addNewAuthor">Add new author</div>
             <div class="menu" id="bookList">View book list</div>
@@ -41,10 +43,12 @@
     </nav><br>
     <br>
     <div id="welcome"></div><br>
+    <h3 id="alert">You need to log in for that option!</h3> 
     
     <div id="search">
             <input type="text" name="searchName" id="searchName" placeholder="Find book...">
             <span id="searchButton" >Search <img src="pictures/search/search-icon-md.png" alt="saerch"></span><br>
+            <span id="noBook">Nothing was found</span>
     </div>
     <div id="tableBookList"></div>
     <div id="tableAuthorList"></div>
@@ -182,7 +186,7 @@
             <button type="submit" id="sendEmail">Send</button>
         </fieldset>
     </form>
-    <script src="script.js"></script>
+    <script src="script-novoIv.js"></script>
 </body>
 
 </html>
