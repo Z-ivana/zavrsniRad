@@ -71,7 +71,7 @@ var logRegForget = function () {
         var gender = document.querySelector('input[name="gender"]:checked').value;
         var password =getValue("userPassword");
         return new User(name, lastName, email, gender, password);
-    }
+    }   
     var addUserToAllUsers = function (email) {
         if (!allUsers[email]) {
             allUsers[email] = createUser();
@@ -294,11 +294,8 @@ var booksAndAuthors =function () {
         else console.log("this book already exist!");       
     };
     var saveBookFunction= function (e) {
-        e.preventDefault();
-      //  createBook();
-      console.log(getValue("bookIsbn"));
-      
-       addBookToAllBooks(getValue("bookIsbn"));
+        e.preventDefault();      
+               addBookToAllBooks(getValue("bookIsbn"));
         lStorage.save("allBooks",allBooks);
         document.getElementById("addBook").reset(); 
     };
@@ -401,16 +398,22 @@ var bookTable=function () {
     writeTableData();
 };
 bookTable();
+var refreshBookTable = function () {
+    $("#booksTable").empty();
+    allBooks=lStorage.load("allBooks");
+    bookTable();
+};
 
 var showOnlyBookList = function () {
     if(isUserLoged){
+        refreshBookTable();
         show("myTableBook"); 
         show("tableBookList");
         hide("myTableAuthor");
         hide("addBook");
         hide("addAuthor");
         hide("search");
-        hide("profilePage");    
+        hide("profilePage");        
     }else{
         alert('Please loged in or register!');        
     }
@@ -481,8 +484,14 @@ var authorTable=(function () {
     authorTable.createHead(6,"authorsTable","tableSorter");
     authorTable.writeHead(6,["Name","Last Name", "Birth year","Died year","Nationality", "EditOrDel"])
     authorTable.writeData();
+    var refreshAuthorsTable = function () {
+        $("#authorsTable").empty();
+        allAuthors=lStorage.load("allAuthors");
+        authorTable.writeData();   
+    };
     var showOnlyAuthorList = function () {
         if(isUserLoged){
+            refreshAuthorsTable();
             show("myTableAuthor");
             show("tableAuthorList");
             hide("myTableBook"); 
@@ -497,6 +506,186 @@ var authorTable=(function () {
         } 
     };
     document.getElementById("authorList").addEventListener("click",showOnlyAuthorList);
+    //######################## Demo podaci
+var demoData = function () {
+    var demoUsers = {
+        "ivana@g.com":{
+            "email": "ivana@g.com",
+            "gender": "female",
+            "lastName": "Zivkovic",
+            "name": "Ivana",
+            "password": "1111"
+        },
+        "nikola@h.com": {
+            "email": "nikola@h.com",
+            "gender": "male",
+           "lastName": "Zivkovic",
+            "name": "Nikola",
+            "password": "2222"
+        },
+        "mihajlo@y.com":{        
+                "email": "mihajlo@y.com" ,
+                "gender": "male",
+                "lastName": "Jovanovic",
+                "name": "Mihajlo",
+                "password": "3333"
+        }
+    }
+    var demoBooks = {
+        "978-86-6039-011-2": { 
+            "author": "Milenko Bodigoric",
+            "borrowed": false,
+            "gender": "Religion",
+            "isbn": "978-86-6039-011-2",
+            "name": "Iscezli: srpska mitologija",
+            "publicationYear": "2013",
+            "rate": "5",
+            "read": true,
+            "whom": ""
+        },
+        "978-86-521-0529-8": {
+            "author": "Nenad Gajic",
+            "borrowed": true,
+            "gender": "Religion",
+            "isbn": "978-86-521-0529-8",
+            "name": "Slovenska mitologija",
+            "publicationYear": "2011",
+            "rate": "5",
+            "read": true,
+            "whom": "Sanja"
+        }
+    }
+    var demoAuthors={
+        "MilenkoBodigoric1971": {
+            "born": "1971",
+            "died": "",
+            "lastName": "Bodigoric",
+            "name": "Milenko",
+            "​​nationality": "Serbian"
+        },
+        "NenadGajic1974": {
+            "born": "1974",
+            "died": "",
+            "lastName": "Gajic",
+            "name": "Nenad",
+            "​​nationality": "Serbian"
+        }
+    }
+ lStorage.save("allUsers", demoUsers);
+ lStorage.save("allAuthors", demoAuthors);
+ lStorage.save("allBooks", demoBooks);
+};
+demoData(); 
+//############################ edit & del
+    var editAndDel= function () {
+        var allEditB=document.querySelectorAll("[id$='_edit']");
+        var saveChanges=document.createElement("button");
+        saveChanges.setAttribute("type", "submit")
+        saveChanges.setAttribute("id", "saveChanges");
+        saveChanges.textContent="Save Changes";
+        document.getElementById("buttons").appendChild(saveChanges);
+    
+        var saveChangesB = function () {
+            if(allBooks[isbn].isbn==getValue("bookIsbn") && document.querySelectorAll("require")!=null){
+                allBooks[isbn] = booksAndAuthorsManipulations.createBook();
+                }          
+                else {
+                    console.log("you can`t change isbn number of a book and you need to fill all requered filds");
+                }
+                lStorage.save("allBooks",allBooks);
+        };
+        var editBook = function (e) {
+            e.preventDefault();
+            var isbn=this.id.substr(0,this.id.length-5);
+            show("addBook");
+            document.getElementById("saveChanges").style.visibility = "visible";                    
+            setValue("bookIsbn",allBooks[isbn].isbn);
+            setValue("bookName",allBooks[isbn].name);
+            setValue("author",allBooks[isbn].author);
+            setValue("gender",allBooks[isbn].gender);
+            setValue("year",allBooks[isbn].publicationYear);
+            setValue("borrowed",allBooks[isbn].borrowed);
+            setValue("whom",allBooks[isbn].whom);
+            setValue("read",allBooks[isbn].read);
+            setValue("rate",allBooks[isbn].rate);        
+            document.getElementById("saveChanges").addEventListener("click", saveChangesB);
+        };
+        for(var numbOfEditButtons=0; numbOfEditButtons<allEditB.length; numbOfEditButtons++){ 
+            allEditB[numbOfEditButtons].addEventListener("click", editBook);
+        };
+        var allEditA=document.querySelectorAll("[id$='-edit']");
+        var saveChangesA=document.createElement("button");
+            saveChangesA.setAttribute("type", "submit");
+            saveChangesA.setAttribute("id", "saveChangesA");
+            saveChangesA.textContent="Save Changes";
+            document.getElementById("buttonsA").appendChild(saveChangesA);
+        var saveChangesToAuthor = function () {
+            if( document.querySelectorAll("require")!=null){
+                allAuthors[authorsId] = booksAndAuthorsManipulations.createAuthor();
+            }       
+                lStorage.save("allAuthors",allAuthors);
+                
+        };
+        var editAuthorFunction = function (e) {
+            e.preventDefault();
+            var authorsId=this.id.substr(0,this.id.length-5);
+            show("addAuthor");
+            document.getElementById("saveChangesA").style.visibility = "visible";  
+            setValue("authorName",allAuthors[authorsId].name);
+            setValue("authorLastName",allAuthors[authorsId].lastName);
+            setValue("born",allAuthors[authorsId].born);
+            setValue("died",allAuthors[authorsId].died);
+            setValue("nationality",allAuthors[authorsId].nationality);
+            document.getElementById("saveChangesA").addEventListener("click", saveChangesToAuthor);    
+        };
+        for(var numbOfEditButtons=0; numbOfEditButtons<allEditA.length; numbOfEditButtons++){ 
+            allEditA[numbOfEditButtons].addEventListener("click", editAuthorFunction);
+        };        
+        var deleteBooksOrAuthor=function () {
+            var allBooks=lStorage.load("allBooks");
+            var deleteBook = function () {
+               
+                var isbn=this.id.substr(0,this.id.length-4);    
+                console.log("isbn broj knjige koju zelimo da obrisemo",isbn);
+                           
+                delete allBooks[isbn];
+                lStorage.save("allBooks",allBooks); 
+                allBooks=lStorage.load("allBooks");
+                refreshBookTable();
+                //location.reload();
+                show("myTableBook");
+                show("tableBookList");   
+            };
+            var deleteAuthor = function () {
+                var authorsId=this.id.substr(0,this.id.length-4); 
+                allAuthors=lStorage.load("allAuthors");
+                delete allAuthors[authorsId];
+                lStorage.save("allAuthors",allAuthors);
+                refreshAuthorsTable();
+               // location.reload();
+                show("myTableAuthor");
+                show("tableAuthorList");
+            };
+            
+                 var allDellBook=document.querySelectorAll("[id$='_del']");
+                for(var numberOfDelButtons=0; numberOfDelButtons<allDellBook.length; numberOfDelButtons++){                    
+                    allDellBook[numberOfDelButtons].addEventListener("click", deleteBook);
+                }
+                    
+            
+                var allDellAuthor=document.querySelectorAll("[id$='-del']");
+                for(var numberOfDelButtons=0; numberOfDelButtons<allDellAuthor.length; numberOfDelButtons++){
+                    allDellAuthor[numberOfDelButtons].addEventListener("click", console.log("ndjkdnjk"));       
+                }
+            
+        };
+        //deleteBooksOrAuthor();
+        
+        
+    };
+    editAndDel();
+   
+   
     
 //########################## sortiranje pomocu Jqueri-ja
 var sortTable=function (id) {
@@ -530,107 +719,7 @@ var createProfilePage = function () {
     }
 };
     document.getElementById("profile").addEventListener("click", createProfilePage);
-//############################ edit & del
-var editAndDel= function () {
-    var allEditB=document.querySelectorAll("[id$='_edit']");
-    var saveChanges=document.createElement("button");
-    saveChanges.setAttribute("type", "submit")
-    saveChanges.setAttribute("id", "saveChanges");
-    saveChanges.textContent="Save Changes";
-    document.getElementById("buttons").appendChild(saveChanges);
 
-    var saveChangesB = function () {
-        if(allBooks[isbn].isbn==getValue("bookIsbn") && document.querySelectorAll("require")!=null){
-            allBooks[isbn] = booksAndAuthorsManipulations.createBook();
-            }          
-            else {
-                console.log("you can`t change isbn number of a book and you need to fill all requered filds");
-            }
-            lStorage.save("allBooks",allBooks);
-    };
-    var editBook = function (e) {
-        e.preventDefault();
-        var isbn=this.id.substr(0,this.id.length-5);
-        show("addBook");
-        document.getElementById("saveChanges").style.visibility = "visible";                    
-        setValue("bookIsbn",allBooks[isbn].isbn);
-        setValue("bookName",allBooks[isbn].name);
-        setValue("author",allBooks[isbn].author);
-        setValue("gender",allBooks[isbn].gender);
-        setValue("year",allBooks[isbn].publicationYear);
-        setValue("borrowed",allBooks[isbn].borrowed);
-        setValue("whom",allBooks[isbn].whom);
-        setValue("read",allBooks[isbn].read);
-        setValue("rate",allBooks[isbn].rate);        
-        document.getElementById("saveChanges").addEventListener("click", saveChangesB);
-    };
-    for(var numbOfEditButtons=0; numbOfEditButtons<allEditB.length; numbOfEditButtons++){ 
-        allEditB[numbOfEditButtons].addEventListener("click", editBook);
-    };
-    var allEditA=document.querySelectorAll("[id$='-edit']");
-    var saveChangesA=document.createElement("button");
-
-        saveChangesA.setAttribute("type", "submit")
-        saveChangesA.setAttribute("id", "saveChangesA");
-        saveChangesA.textContent="Save Changes";
-        document.getElementById("buttonsA").appendChild(saveChangesA);
-    var saveChangesToAuthor = function () {
-        if( document.querySelectorAll("require")!=null){
-            allAuthors[authorsId] = booksAndAuthorsManipulations.createAuthor();
-        }       
-            lStorage.save("allAuthors",allAuthors);
-            
-    };
-    var editAuthorFunction = function (e) {
-        e.preventDefault();
-        var authorsId=this.id.substr(0,this.id.length-5);
-        show("addAuthor");
-        document.getElementById("saveChangesA").style.visibility = "visible";  
-        setValue("authorName",allAuthors[authorsId].name);
-        setValue("authorLastName",allAuthors[authorsId].lastName);
-        setValue("born",allAuthors[authorsId].born);
-        setValue("died",allAuthors[authorsId].died);
-        setValue("nationality",allAuthors[authorsId].nationality);
-        document.getElementById("saveChangesA").addEventListener("click", saveChangesToAuthor);    
-    };
-    for(var numbOfEditButtons=0; numbOfEditButtons<allEditA.length; numbOfEditButtons++){ 
-        allEditA[numbOfEditButtons].addEventListener("click", editAuthorFunction);
-    };
-    var deleteBooksOrAuthor=function (bookOrAuthor) {
-        var allDell;
-        var deleteBook = function () {
-            var isbn=this.id.substr(0,this.id.length-4);               
-            delete allBooks[isbn];
-            lStorage.save("allBooks",allBooks); 
-            location.reload();
-            show("myTableBook");// ne rade
-            show("tableBookList");   
-        };
-        var deleteAuthor = function () {
-            var authorsId=this.id.substr(0,this.id.length-4);   
-            delete allAuthors[authorsId];
-            lStorage.save("allAuthors",allAuthors);
-            location.reload(); 
-            show("myTableAuthor");// ne rade
-            show("tableAuthorList");
-        };
-        if(bookOrAuthor=="book"){
-            allDell=document.querySelectorAll("[id$='_del']");
-            for(var numberOfDelButtons=0; numberOfDelButtons<allDell.length; numberOfDelButtons++){
-                allDell[numberOfDelButtons].addEventListener("click", deleteBook);
-            }
-        }else if(bookOrAuthor=="author"){ 
-            allDell=document.querySelectorAll("[id$='-del']");
-            for(var numberOfDelButtons=0; numberOfDelButtons<allDell.length; numberOfDelButtons++){
-                allDell[numberOfDelButtons].addEventListener("click", deleteAuthor);       
-            }   
-        }
-    };
-    deleteBooksOrAuthor("book");
-    deleteBooksOrAuthor("author");
-    
-};
-editAndDel();
 //############################# pretraga
 var search = function () { 
     var find=false;
@@ -700,3 +789,4 @@ var showSearchBox = function () {
     
 };
 document.getElementById("searchMenuButton").addEventListener("click",showSearchBox);
+    
