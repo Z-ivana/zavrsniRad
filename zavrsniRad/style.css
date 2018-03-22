@@ -43,5 +43,6 @@ div[id$="_del"]:hover{color:rgb(163, 126, 22)}
 div[id$="-edit"]:hover{color:rgb(163, 126, 22)}
 div[id$="_edit"]:hover{color:rgb(245, 190, 40)}
 #searchButton:hover{color:rgb(245, 190, 40)}
+.header:hover{color:rgb(163, 126, 22)}
 
 
