@@ -404,7 +404,7 @@ var refreshBookTable = function () {
 };
 var showOnlyBookList = function () {
     if(isUserLoged){
-        refreshBookTable();
+        //refreshBookTable();
         show("myTableBook"); 
         show("tableBookList");
         hide("myTableAuthor");
