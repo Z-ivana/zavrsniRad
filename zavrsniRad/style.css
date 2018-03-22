@@ -4,17 +4,21 @@ body{background-image: url("pictures/library2.jpg");color: whitesmoke;}
 nav{ padding-left:15%;}
 form{background-color:rgba(8, 8, 8, 0.596);margin: 20px; }
 .menu{float:left; border: solid whitesmoke 1px; padding:10px; margin-left: 10px; background-color:rgba(8, 8, 8, 0.596); }
+.menu:hover{color:rgb(163, 126, 22)}
 nav img{height: 23px; width: 23px;}
 #searchMenuButton{float:left; padding:5px; margin-left: 10px;}
 .column{float:left; padding:10px; margin-left: 30px;}
 header{position: relative; margin:auto;}
 #register{display: none; padding:0%; margin: auto;max-width:30%;}
+#registerButton:hover{color:rgb(163, 126, 22);}
 #forgetPassword{display: none; padding:0%; margin: auto;max-width:15%;}
 #logOut{display: none;float: right;}
 #logIn{display:block;  float:right; padding-left: 0%;}
 #logInButton a{overflow: hidden;}
+#logInButton:hover{color:rgb(163, 126, 22) }
 #email, #pass, #logInButton,#registerButton{float:left; padding-left: 10px;}
 #forgetPassButton{float:left; padding-left: 100px;padding-right: 100px;}
+#forgetPassButton:hover{color:rgb(163, 126, 22) }
 #addBook{ max-width: 50%;float:left;display:none;}
 #whomBorrowed{display: none;}
 #addAuthor{display: none;position: relative; float: left;margin-left: 10%;width: 30%;}
@@ -34,3 +38,10 @@ td, th{background-color:rgba(8, 8, 8, 0.596);padding: 5px; border: 1px solid whi
 .span{padding-left:50px;}
 #profilePage div{border: 1px solid whitesmoke;font-size: 15px;width: 50px;margin-left: 350px;text-align: center;}
 #noBook{display: none;}
+div[id$="-del"]:hover{color:rgb(163, 126, 22)}
+div[id$="_del"]:hover{color:rgb(163, 126, 22)}
+div[id$="-edit"]:hover{color:rgb(163, 126, 22)}
+div[id$="_edit"]:hover{color:rgb(245, 190, 40)}
+#searchButton:hover{color:rgb(245, 190, 40)}
+
+
