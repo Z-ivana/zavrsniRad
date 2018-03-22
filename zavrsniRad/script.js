@@ -254,8 +254,12 @@ var booksAndAuthors =function () {
         for(var numberOfStar=0;numberOfStar<stars.length;numberOfStar++){
             stars[numberOfStar].addEventListener("click", function () {
                 starNo=this.className.charAt(5)
-                for(var numbOfelectedStar=0; numbOfelectedStar<starNo; numbOfelectedStar++){
-                    stars[numbOfelectedStar].src="pictures/rating/yelowStar.png";            
+                for(var numbOfelectedStar=0; numbOfelectedStar<stars.length; numbOfelectedStar++){
+                    if(numbOfelectedStar<starNo)
+                    stars[numbOfelectedStar].src="pictures/rating/yelowStar.png";     
+                    else{
+                        stars[numbOfelectedStar].src="pictures/rating/whiteStar.png";                        
+                    }
                 } 
             });
         };
