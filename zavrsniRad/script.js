@@ -302,7 +302,6 @@ var booksAndAuthors =function () {
     };
     var hideSaveChangesButton = function () {
         show("addAuthor");
-        //document.getElementById("saveChangesA").style.visibility = "hidden";  
     };
     document.getElementById("addAuthorButton").addEventListener("click", hideSaveChangesButton);
     document.getElementById("read").addEventListener("click", function (){
@@ -321,11 +320,11 @@ var booksAndAuthors =function () {
     document.getElementById("addNewAuthor").addEventListener("click", showOnlyAddAuthor);
     document.getElementById("addNewBook").addEventListener("click", showOnlyAddBook);
     document.getElementById("saveNewAuthor").addEventListener("click", saveNewAuthorFunction);
-   // document.getElementById("author").addEventListener("click", createAuthorsList);
     return {
         createAuthor : createAuthor,
         createBook : createBook,
-        addBookToAllBooks :addBookToAllBooks
+        addBookToAllBooks :addBookToAllBooks,
+        createAuthorsList : createAuthorsList
     }
 };
 var booksAndAuthorsManipulations=booksAndAuthors();
@@ -495,7 +494,7 @@ var authorTable=(function () {
     };
     var showOnlyAuthorList = function () {
         if(isUserLoged){
-            refreshAuthorsTable();
+            //refreshAuthorsTable();
             //editAndDel.deleteBooksOrAuthor;   
             //editAndDel.editAuthorFunction;
             //editAndDel.editBook;
@@ -560,6 +559,17 @@ var demoData = function () {
             "rate": "5",
             "read": true,
             "whom": "Sanja"
+        },
+        "978-86-89565-22-5": {
+            "author": "Viktorija Ejvard",
+            "borrowed": false,
+            "gender": "",
+            "isbn": "978-86-89565-22-5",
+            "name": "Crvena kraljica",
+            "publicationYear": "2015",
+            "rate": "",
+            "read": false,
+            "whom": ""
         }
     }
     var demoAuthors={
@@ -569,6 +579,13 @@ var demoData = function () {
             "lastName": "Bodigoric",
             "name": "Milenko",
             "​​nationality": "Serbian"
+        },
+        "ViktorijaEjvjard1990" : {
+            "born" : "1990",
+            "died"  :   "",
+            "lastName"  :   "Ejvjard",
+            "name"  :   "Viktorija",
+            "netionality"   :   ""
         },
         "NenadGajic1974": {
             "born": "1974",
@@ -596,6 +613,8 @@ demoData();
         document.getElementById("buttons").appendChild(saveChanges);
     
         var saveChangesB = function (isbn) {
+            console.log("allBooks========",allBooks);
+            
             if(allBooks[isbn].isbn==getValue("bookIsbn") && document.querySelectorAll("require")!=null){
                 allBooks[isbn] = booksAndAuthorsManipulations.createBook();
                 }          
@@ -657,9 +676,11 @@ demoData();
             setValue("nationality",allAuthors[authorsId].nationality);
             document.getElementById("saveChangesA").addEventListener("click", function (e) {
                 e.preventDefault();
+                booksAndAuthorsManipulations.createAuthorsList;                
                 saveChangesToAuthor(authorsId);  
                 refreshAuthorsTable();
-                //showOnlyAuthorList();
+                booksAndAuthorsManipulations.createAuthorsList();                
+               // showOnlyAuthorList();
                 show("myTableAuthor");
                 show("tableAuthorList");
                 hide("addAuthor");
@@ -677,18 +698,25 @@ demoData();
 
         var deleteBooksOrAuthor=function () {
 
-            var allBooks=lStorage.load("allBooks");
-            var allAuthors=lStorage.load("allAuthors");
-
+            
             var deleteBook = function (isbn) {
+                var allBooks=lStorage.load("allBooks");
+                
+                console.log("allBooks pre delete............"+allBooks);
+                
+                console.log("allBooks[isbn]....pre delete......", allBooks[isbn]);
+                
                 delete allBooks[isbn];
+                console.log("allBooks posle delete....", allBooks, "book isbn.......", isbn,"allBoks[isbn]......", allBooks[isbn]);
+                
                 lStorage.save("allBooks", allBooks);
-                allBooks = lStorage.load("allBooks");
+                //allBooks = lStorage.load("allBooks");
                 refreshBookTable();
                 show("myTableBook");
                 show("tableBookList");
             };
             var deleteAuthor = function (authorsId) {
+                var allAuthors=lStorage.load("allAuthors");                
                 delete allAuthors[authorsId];
                 lStorage.save("allAuthors",allAuthors);
                 refreshAuthorsTable();
